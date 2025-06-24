@@ -3,12 +3,107 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f0f0f0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
 }
 
 .container {
     background: white;
     padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.question-container {
+    background: #f8f9fa;
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.question-container h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.option:hover {
+    background-color: #e9ecef;
+}
+
+.option input {
+    margin-right: 10px;
+}
+
+.option label {
+    cursor: pointer;
+    flex: 1;
+}
+
+/* DESAFIO CSS 1: Estilize o botão "Verificar Resposta" */
+/* Dica: use padding, background-color, color, border, border-radius, cursor */
+
+#verificar{
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#verificar:hover {
+    background-color: #299941e3;
+    transform: scale(1.02);
+}
+
+#verificar:active {
+    background-color: #1e7e34;
+    transform: scale(0.98);
+}
+
+#resultado {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    /* DESAFIO CSS 2: Adicione display: none; para esconder inicialmente */
+    display: none;
+}
+
+/* DESAFIO CSS 3: Crie classes .correto e .incorreto para o resultado */
+/* .correto deve ter background verde claro e texto verde escuro */
+/* .incorreto deve ter background vermelho claro e texto vermelho escuro */
+
+.correto {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.incorreto {
+    background-color: #f8d7da;
+    color: #721c24;
 }

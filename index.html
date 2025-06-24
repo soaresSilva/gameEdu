@@ -11,25 +11,41 @@
         <h1>🧠 Quiz de Programação</h1>
         
         <!-- DESAFIO 1: Adicione aqui um parágrafo com uma descrição do quiz -->
-        
+        <p>Teste seus conhecimentos em programação com este quiz interativo! Responda às perguntas e veja como você se sai.</p>
+
         <div class="question-container">
+
             <h2>Questão 1</h2>
             <p>O que significa HTML?</p>
+            <div class="question-container">
             
-            <!-- DESAFIO 2: Crie 4 opções de resposta usando input type="radio" -->
-            <!-- Dica: todas devem ter o mesmo "name" mas "value" diferentes -->
-            <!-- As opções são:
-                 A) HyperText Markup Language
-                 B) Home Tool Markup Language  
-                 C) Hyperlinks and Text Markup Language
-                 D) HyperTool Multi Language
-            -->
+            <div class="option">
+                <input id="A" type="radio" name="resposta" value="A">
+                <label for="A">A) HyperText Markup Language</label>
+            </div>
             
-        </div>
+            <div class="option">
+                <input id="B" type="radio" name="resposta" value="B">
+                <label for="B">B) Home Tool Markup Language</label>
+            </div>
+            
+            <div class="option">
+                <input id="C" type="radio" name="resposta" value="C">
+                <label for="C">C) Hyperlinks and Text Markup Language</label>
+            </div>
+            
+            <div class="option">
+                <input id="D" type="radio" name="resposta" value="D">
+                <label for="D">D) HyperTool Multi Language</label>
+            </div>
         
         <!-- DESAFIO 3: Adicione um botão "Verificar Resposta" -->
+        <button id="verificar">Verificar Resposta</button>
         
         <!-- DESAFIO 4: Crie uma div com id="resultado" para mostrar o feedback -->
+        <div id="resultado">
+            <!-- O feedback será mostrado aqui -->
+        </div>
         
     </div>
 </body>
