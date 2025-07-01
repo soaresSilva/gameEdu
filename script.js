@@ -1,37 +1,170 @@
-<script>
-        // EXPLICAÇÃO: Vamos criar nossa primeira função!
-        // Esta função será chamada quando o usuário clicar no botão
-        
-        function verificarResposta() {
-            // DESAFIO JS 1: Capture qual opção foi selecionada
-            // Dica: Use document.querySelector('input[name="resposta"]:checked')
-            // E armazene em uma variável chamada 'opcaoSelecionada'
-            
-            
-            // DESAFIO JS 2: Verifique se alguma opção foi selecionada
-            // Se não foi selecionada nada, mostre um alert pedindo para selecionar
-            // Dica: use if(!opcaoSelecionada) { alert("..."); return; }
-            
-            
-            // Aqui eu vou te ajudar: a resposta correta é 'A'
-            const respostaCorreta = 'A';
-            
-            // DESAFIO JS 3: Compare se a resposta está certa
-            // Pegue o valor da opcaoSelecionada e compare com respostaCorreta
-            // Armazene o resultado em uma variável 'acertou' (true ou false)
-            
-            
-            // DESAFIO JS 4: Mostre o resultado na div #resultado
-            // 1. Pegue a div resultado: const divResultado = document.getElementById('resultado');
-            // 2. Se acertou: divResultado.textContent = "Correto! HTML significa HyperText Markup Language"
-            //    e adicione a classe 'correto': divResultado.className = 'correto';
-            // 3. Se errou: divResultado.textContent = "Incorreto! A resposta certa é..."
-            //    e adicione a classe 'incorreto': divResultado.className = 'incorreto';
-            // 4. Mostre a div: divResultado.style.display = 'block';
-            
+// EXPLICAÇÃO: Vamos criar um banco de dados de perguntas!
+// Um array de objetos - cada objeto é uma pergunta
+const perguntas = [
+    {
+        pergunta: "O que significa HTML?",
+        opcoes: [
+            "HyperText Markup Language",
+            "Home Tool Markup Language",
+            "Hyperlinks and Text Markup Language",
+            "HyperTool Multi Language"
+        ],
+        correta: 0 // índice da resposta correta (começa em 0)
+    },
+    {
+        pergunta: "Qual é a linguagem de estilo para páginas web?",
+        opcoes: [
+            "JavaScript",
+            "CSS",
+            "Python",
+            "Java"
+        ],
+        correta: 1
+    },
+    // DESAFIO JS 6: Adicione uma terceira pergunta sobre JavaScript
+    // Pergunta: "Para que serve o JavaScript?"
+    // Opcoes: ["Estilizar páginas", "Criar interatividade", "Estruturar conteúdo", "Gerenciar banco de dados"]
+    // Resposta correta: índice 1
+    {
+        pergunta: "Para que serve o JavaScript?",
+        opcoes: [
+            "Estilizar páginas",
+            "Criar interatividade",
+            "Estruturar conteúdo",
+            "Gerenciar banco de dados"
+        ],
+        correta: 1
+    }
+];
+
+let perguntaAtual = 0; // Controla qual pergunta estamos mostrando
+let pontuacao = 0;     // Contador de acertos
+let tempo = 10;               // tempo inicial
+let intervalo; // Variável para o intervalo do cronômetro
+
+// DESAFIO JS 7: Crie uma função chamada 'carregarPergunta'
+// Esta função deve:
+// 1. Pegar a pergunta atual: const pergunta = perguntas[perguntaAtual];
+// 2. Atualizar o título: document.querySelector('h2').textContent = `Questão ${perguntaAtual + 1}`;
+// 3. Atualizar o texto da pergunta: document.querySelector('.question-container p').textContent = pergunta.pergunta;
+// 4. Usar um loop para atualizar as opções (vou te ajudar com isso depois)
+function carregarPergunta() {
+    const pergunta = perguntas[perguntaAtual];
+    document.querySelector('h2').textContent = `Questão ${perguntaAtual + 1}`;
+    document.querySelector('.question-container p').textContent = pergunta.pergunta;
+
+    const opcoesContainer = document.querySelector('.question-container .options');
+    opcoesContainer.innerHTML = ''; // Limpa opções anteriores
+
+    pergunta.opcoes.forEach((opcao, index) => {
+        const div = document.createElement('div');
+        div.classList.add('options');
+        div.innerHTML = `
+            <input id="${index}" type="radio" name="resposta" value="${index}">
+            <label for="${index}">${opcao}</label>
+        `;
+        opcoesContainer.appendChild(div);
+    });
+
+    // Atualiza a barra de progresso
+    const progresso = ((perguntaAtual + 1) / perguntas.length) * 100;
+    document.getElementById('progresso').style.width = `${progresso}%`
+
+    document.getElementById('verificar').disabled = false;
+    document.getElementById('verificar').style.display = 'block';
+    document.getElementById('proxima').style.display = 'none';
+    document.getElementById('resultado').style.display = 'none';
+
+    clearInterval(intervalo); // cancela cronômetro anterior
+    iniciarCronometro();      // inicia um novo
+}
+
+function iniciarCronometro() {
+    tempo = 10;
+    const cronometroEl = document.getElementById('cronometro');
+    cronometroEl.textContent = `⏱️ Tempo restante: ${tempo}s`;
+
+    intervalo = setInterval(() => {
+        tempo--;
+        cronometroEl.textContent = `⏱️ Tempo restante: ${tempo}s`;
+
+        if (tempo === 0) {
+            clearInterval(intervalo);
+            document.getElementById('verificar').disabled = true;
+
+            // Mostrar feedback de tempo esgotado
+            const pergunta = perguntas[perguntaAtual];
+            const divResultado = document.getElementById('resultado');
+            divResultado.textContent = `⏰ Tempo esgotado! A resposta certa era: ${pergunta.opcoes[pergunta.correta]}`;
+            divResultado.className = 'incorreto';
+            divResultado.style.display = 'block';
+
+            document.getElementById('proxima').style.display = 'block';
+            document.getElementById('verificar').style.display = 'none';
         }
-        
-        // DESAFIO JS 5: Conecte a função ao botão
-        // Dica: document.getElementById('verificar').addEventListener('click', verificarResposta);
-        
-    </script>
+    }, 1000);
+}
+
+function verificarResposta() {
+    const opcaoSelecionada = document.querySelector('input[name="resposta"]:checked');
+
+    if (!opcaoSelecionada) {
+        alert("Por favor, selecione uma opção antes de verificar.");
+        return;
+    }
+
+    // DESAFIO JS 8: Adapte esta parte para usar o array de perguntas
+    // Dica: const pergunta = perguntas[perguntaAtual];
+    // E compare: parseInt(opcaoSelecionada.value) === pergunta.correta
+    const pergunta = perguntas[perguntaAtual];
+    const acertou = parseInt(opcaoSelecionada.value) === pergunta.correta;
+
+    if (acertou) {
+        pontuacao++; // Aumenta a pontuação
+    }
+
+    const divResultado = document.getElementById('resultado');
+    if (acertou) {
+        divResultado.textContent = "Correto! 🎉";
+        divResultado.className = 'correto';
+    } else {
+        divResultado.textContent = `Incorreto! A resposta certa era: ${pergunta.opcoes[pergunta.correta]}`;
+        divResultado.className = 'incorreto';
+    }
+    divResultado.style.display = 'block';
+
+    // DESAFIO JS 9: Esconda o botão "Verificar" e mostre botão "Próxima"
+    // document.getElementById('verificar').style.display = 'none';
+    // Você vai precisar criar um botão "Próxima Questão" no HTML também!
+    document.getElementById('proxima').style.display = 'block';
+    document.getElementById('verificar').style.display = 'none';
+}
+
+document.getElementById('proxima').addEventListener('click', () => {
+    perguntaAtual++;
+
+    if (perguntaAtual < perguntas.length) {
+        carregarPergunta();
+        document.getElementById('resultado').style.display = 'none';
+        document.getElementById('verificar').style.display = 'block';
+        document.getElementById('proxima').style.display = 'none';
+    } else {
+        // Fim do quiz
+        document.querySelector('.question-container').innerHTML = `
+            <h2>Quiz finalizado! 🎉</h2>
+            <p>Sua pontuação: <strong>${pontuacao}</strong> de <strong>${perguntas.length}</strong></p>
+            <button onclick="location.reload()">Recomeçar</button>
+        `;
+    }
+});
+
+document.getElementById('progresso').style.width = '100%';
+
+// Conecta a função ao botão
+document.getElementById('verificar').addEventListener('click', verificarResposta);
+
+
+// DESAFIO JS 10: Chame carregarPergunta() aqui para carregar a primeira pergunta
+carregarPergunta();
+
+
