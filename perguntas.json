@@ -1,0 +1,32 @@
+[
+  {
+    "pergunta": "O que significa HTML?",
+    "opcoes": [
+      "HyperText Markup Language",
+      "Home Tool Markup Language",
+      "Hyperlinks and Text Markup Language",
+      "HyperTool Multi Language"
+    ],
+    "correta": 0
+  },
+  {
+    "pergunta": "Qual é a linguagem de estilo para páginas web?",
+    "opcoes": [
+      "JavaScript",
+      "CSS",
+      "Python",
+      "Java"
+    ],
+    "correta": 1
+  },
+  {
+    "pergunta": "Para que serve o JavaScript?",
+    "opcoes": [
+      "Estilizar páginas",
+      "Criar interatividade",
+      "Estruturar conteúdo",
+      "Gerenciar banco de dados"
+    ],
+    "correta": 1
+  }
+]
