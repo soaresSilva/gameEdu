@@ -1,53 +1,22 @@
 // EXPLICAÇÃO: Vamos criar um banco de dados de perguntas!
 // Um array de objetos - cada objeto é uma pergunta
-const perguntas = [
-    {
-        pergunta: "O que significa HTML?",
-        opcoes: [
-            "HyperText Markup Language",
-            "Home Tool Markup Language",
-            "Hyperlinks and Text Markup Language",
-            "HyperTool Multi Language"
-        ],
-        correta: 0 // índice da resposta correta (começa em 0)
-    },
-    {
-        pergunta: "Qual é a linguagem de estilo para páginas web?",
-        opcoes: [
-            "JavaScript",
-            "CSS",
-            "Python",
-            "Java"
-        ],
-        correta: 1
-    },
-    // DESAFIO JS 6: Adicione uma terceira pergunta sobre JavaScript
-    // Pergunta: "Para que serve o JavaScript?"
-    // Opcoes: ["Estilizar páginas", "Criar interatividade", "Estruturar conteúdo", "Gerenciar banco de dados"]
-    // Resposta correta: índice 1
-    {
-        pergunta: "Para que serve o JavaScript?",
-        opcoes: [
-            "Estilizar páginas",
-            "Criar interatividade",
-            "Estruturar conteúdo",
-            "Gerenciar banco de dados"
-        ],
-        correta: 1
-    }
-];
-
+let perguntas = [];
 let perguntaAtual = 0; // Controla qual pergunta estamos mostrando
 let pontuacao = 0;     // Contador de acertos
 let tempo = 10;               // tempo inicial
-let intervalo; // Variável para o intervalo do cronômetro
+let intervalo;
 
-// DESAFIO JS 7: Crie uma função chamada 'carregarPergunta'
-// Esta função deve:
-// 1. Pegar a pergunta atual: const pergunta = perguntas[perguntaAtual];
-// 2. Atualizar o título: document.querySelector('h2').textContent = `Questão ${perguntaAtual + 1}`;
-// 3. Atualizar o texto da pergunta: document.querySelector('.question-container p').textContent = pergunta.pergunta;
-// 4. Usar um loop para atualizar as opções (vou te ajudar com isso depois)
+async function carregarDados() {
+    try {
+        const response = await fetch('https://seu-backend-no-render.onrender.com/perguntas');
+        perguntas = await response.json();
+        carregarPergunta();
+    } catch (err) {
+        alert("Erro ao carregar perguntas!");
+        console.error(err);
+    }
+}// Variável para o intervalo do cronômetro
+
 function carregarPergunta() {
     const pergunta = perguntas[perguntaAtual];
     document.querySelector('h2').textContent = `Questão ${perguntaAtual + 1}`;
@@ -157,6 +126,8 @@ document.getElementById('proxima').addEventListener('click', () => {
         `;
     }
 });
+
+document.addEventListener('DOMContentLoaded', carregarDados);
 
 document.getElementById('progresso').style.width = '100%';
 
