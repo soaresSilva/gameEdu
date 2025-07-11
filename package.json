@@ -1,8 +1,7 @@
 {
-  "name": "quiz-backend",
+  "name": "gameedu",
   "version": "1.0.0",
-  "description": "Backend simples para quiz de programção",
-  "keywords": [],
+  "description": "",
   "homepage": "https://github.com/soaresSilva/gameEdu#readme",
   "bugs": {
     "url": "https://github.com/soaresSilva/gameEdu/issues"
@@ -12,14 +11,16 @@
     "url": "git+https://github.com/soaresSilva/gameEdu.git"
   },
   "license": "ISC",
-  "author": "Alisson Silva",
+  "author": "",
   "type": "commonjs",
-  "main": "/back-end/server.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "path": "^0.12.7"
   }
 }

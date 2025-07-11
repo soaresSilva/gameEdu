@@ -8,7 +8,7 @@ let intervalo;
 
 async function carregarDados() {
     try {
-        const response = await fetch('https://seu-backend-no-render.onrender.com/perguntas');
+        const response = await fetch('/perguntas');
         perguntas = await response.json();
         carregarPergunta();
     } catch (err) {
@@ -137,5 +137,3 @@ document.getElementById('verificar').addEventListener('click', verificarResposta
 
 // DESAFIO JS 10: Chame carregarPergunta() aqui para carregar a primeira pergunta
 carregarPergunta();
-
-
