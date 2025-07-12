@@ -13,7 +13,7 @@ O **Quiz de Programação** é uma aplicação educacional e divertida que apres
 ## 🚀 Link do Projeto Online
 
 🌐 Acesse o quiz em produção aqui:  
-👉 [https://seu-link-do-render.com](https://seu-link-do-render.com)
+👉 [gameedu.onrender.com](https://gameedu.onrender.com)
 
 > O projeto está hospedado no [Render](https://render.com), com o front-end servido por arquivos estáticos e o back-end em Node.js.
 
@@ -74,7 +74,7 @@ gameEdu/
 ## 🛠️ Como Rodar o Projeto Localmente
 
 ### 1. Clone o repositório
-git clone https://github.com/seu-usuario/seu-repositorio.git
+git clone [gameEdu](https://github.com/soaresSilva/gameEdu)
 cd seu-repositorio
 ### 2. Instale as dependências
 npm install
