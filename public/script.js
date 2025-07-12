@@ -1,10 +1,9 @@
-// EXPLICAÇÃO: Vamos criar um banco de dados de perguntas!
 // Um array de objetos - cada objeto é uma pergunta
 let perguntas = [];
 let perguntaAtual = 0; // Controla qual pergunta estamos mostrando
 let pontuacao = 0;     // Contador de acertos
 let tempo = 10;               // tempo inicial
-let intervalo;
+let intervaloId = null;
 
 async function carregarDados() {
     try {
@@ -18,8 +17,11 @@ async function carregarDados() {
 }// Variável para o intervalo do cronômetro
 
 function carregarPergunta() {
+    clearInterval(intervaloId); // Limpa o cronômetro anterior
+    tempo = 10; // Reseta o tempo para 10 segundos
+    iniciarCronometro(); // Inicia o cronômetro
     const pergunta = perguntas[perguntaAtual];
-    document.querySelector('h2').textContent = `Questão ${perguntaAtual + 1}`;
+    document.querySelector('h2').textContent = `Questão  ${perguntaAtual + 1}`;
     document.querySelector('.question-container p').textContent = pergunta.pergunta;
 
     const opcoesContainer = document.querySelector('.question-container .options');
@@ -49,16 +51,15 @@ function carregarPergunta() {
 }
 
 function iniciarCronometro() {
-    tempo = 10;
     const cronometroEl = document.getElementById('cronometro');
     cronometroEl.textContent = `⏱️ Tempo restante: ${tempo}s`;
 
-    intervalo = setInterval(() => {
+    intervaloId = setInterval(() => {
         tempo--;
         cronometroEl.textContent = `⏱️ Tempo restante: ${tempo}s`;
 
         if (tempo === 0) {
-            clearInterval(intervalo);
+            clearInterval(intervaloId);
             document.getElementById('verificar').disabled = true;
 
             // Mostrar feedback de tempo esgotado
@@ -82,9 +83,8 @@ function verificarResposta() {
         return;
     }
 
-    // DESAFIO JS 8: Adapte esta parte para usar o array de perguntas
-    // Dica: const pergunta = perguntas[perguntaAtual];
-    // E compare: parseInt(opcaoSelecionada.value) === pergunta.correta
+    clearInterval(intervaloId); // Para o cronômetro quando a resposta é verificada
+
     const pergunta = perguntas[perguntaAtual];
     const acertou = parseInt(opcaoSelecionada.value) === pergunta.correta;
 
@@ -102,9 +102,7 @@ function verificarResposta() {
     }
     divResultado.style.display = 'block';
 
-    // DESAFIO JS 9: Esconda o botão "Verificar" e mostre botão "Próxima"
-    // document.getElementById('verificar').style.display = 'none';
-    // Você vai precisar criar um botão "Próxima Questão" no HTML também!
+
     document.getElementById('proxima').style.display = 'block';
     document.getElementById('verificar').style.display = 'none';
 }
@@ -134,6 +132,4 @@ document.getElementById('progresso').style.width = '100%';
 // Conecta a função ao botão
 document.getElementById('verificar').addEventListener('click', verificarResposta);
 
-
-// DESAFIO JS 10: Chame carregarPergunta() aqui para carregar a primeira pergunta
 carregarPergunta();
