@@ -1,8 +1,7 @@
-// Um array de objetos - cada objeto é uma pergunta
 let perguntas = [];
-let perguntaAtual = 0; // Controla qual pergunta estamos mostrando
-let pontuacao = 0;     // Contador de acertos
-let tempo = 10;               // tempo inicial
+let perguntaAtual = 0;
+let pontuacao = 0;
+let tempo = 10;
 let intervaloId = null;
 
 async function carregarDados() {
@@ -14,18 +13,18 @@ async function carregarDados() {
         alert("Erro ao carregar perguntas!");
         console.error(err);
     }
-}// Variável para o intervalo do cronômetro
+}
 
 function carregarPergunta() {
-    clearInterval(intervaloId); // Limpa o cronômetro anterior
-    tempo = 10; // Reseta o tempo para 10 segundos
-    iniciarCronometro(); // Inicia o cronômetro
+    clearInterval(intervaloId); // Corrigido o nome da variável
+    tempo = 10;
+
     const pergunta = perguntas[perguntaAtual];
-    document.querySelector('h2').textContent = `Questão  ${perguntaAtual + 1}`;
+    document.querySelector('h2').textContent = `Questão ${perguntaAtual + 1}`;
     document.querySelector('.question-container p').textContent = pergunta.pergunta;
 
     const opcoesContainer = document.querySelector('.question-container .options');
-    opcoesContainer.innerHTML = ''; // Limpa opções anteriores
+    opcoesContainer.innerHTML = '';
 
     pergunta.opcoes.forEach((opcao, index) => {
         const div = document.createElement('div');
@@ -37,17 +36,15 @@ function carregarPergunta() {
         opcoesContainer.appendChild(div);
     });
 
-    // Atualiza a barra de progresso
     const progresso = ((perguntaAtual + 1) / perguntas.length) * 100;
-    document.getElementById('progresso').style.width = `${progresso}%`
+    document.getElementById('progresso').style.width = `${progresso}%`;
 
     document.getElementById('verificar').disabled = false;
     document.getElementById('verificar').style.display = 'block';
     document.getElementById('proxima').style.display = 'none';
     document.getElementById('resultado').style.display = 'none';
 
-    clearInterval(intervalo); // cancela cronômetro anterior
-    iniciarCronometro();      // inicia um novo
+    iniciarCronometro(); // Apenas um chamado aqui
 }
 
 function iniciarCronometro() {
@@ -62,7 +59,6 @@ function iniciarCronometro() {
             clearInterval(intervaloId);
             document.getElementById('verificar').disabled = true;
 
-            // Mostrar feedback de tempo esgotado
             const pergunta = perguntas[perguntaAtual];
             const divResultado = document.getElementById('resultado');
             divResultado.textContent = `⏰ Tempo esgotado! A resposta certa era: ${pergunta.opcoes[pergunta.correta]}`;
@@ -77,23 +73,19 @@ function iniciarCronometro() {
 
 function verificarResposta() {
     const opcaoSelecionada = document.querySelector('input[name="resposta"]:checked');
-
     if (!opcaoSelecionada) {
         alert("Por favor, selecione uma opção antes de verificar.");
         return;
     }
 
-    clearInterval(intervaloId); // Para o cronômetro quando a resposta é verificada
+    clearInterval(intervaloId);
 
     const pergunta = perguntas[perguntaAtual];
     const acertou = parseInt(opcaoSelecionada.value) === pergunta.correta;
 
-    if (acertou) {
-        pontuacao++; // Aumenta a pontuação
-    }
-
     const divResultado = document.getElementById('resultado');
     if (acertou) {
+        pontuacao++;
         divResultado.textContent = "Correto! 🎉";
         divResultado.className = 'correto';
     } else {
@@ -102,21 +94,15 @@ function verificarResposta() {
     }
     divResultado.style.display = 'block';
 
-
     document.getElementById('proxima').style.display = 'block';
     document.getElementById('verificar').style.display = 'none';
 }
 
 document.getElementById('proxima').addEventListener('click', () => {
     perguntaAtual++;
-
     if (perguntaAtual < perguntas.length) {
         carregarPergunta();
-        document.getElementById('resultado').style.display = 'none';
-        document.getElementById('verificar').style.display = 'block';
-        document.getElementById('proxima').style.display = 'none';
     } else {
-        // Fim do quiz
         document.querySelector('.question-container').innerHTML = `
             <h2>Quiz finalizado! 🎉</h2>
             <p>Sua pontuação: <strong>${pontuacao}</strong> de <strong>${perguntas.length}</strong></p>
@@ -127,9 +113,4 @@ document.getElementById('proxima').addEventListener('click', () => {
 
 document.addEventListener('DOMContentLoaded', carregarDados);
 
-document.getElementById('progresso').style.width = '100%';
-
-// Conecta a função ao botão
 document.getElementById('verificar').addEventListener('click', verificarResposta);
-
-carregarPergunta();
